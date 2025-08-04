@@ -1,0 +1,60 @@
+#include<Servo.h>
+#include<LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,6,2);
+Servo myservo;
+void setup() {
+  // put your setup code here, to run once:
+pinMode(D5,INPUT);
+pinMode(D6,INPUT);
+pinMode(D7,INPUT);
+pinMode(D0,INPUT);
+myservo.attach(D3);
+Serial.begin(9600);
+lcd.init();
+lcd.backlight();
+lcd.setCursor(0,0);
+lcd.print("G1:");
+lcd.setCursor(8,0);
+lcd.print("S1:");
+lcd.setCursor(0,1);
+lcd.print("S2:");
+lcd.setCursor(8,1);
+lcd.print("S3:");}
+void loop() {
+  // put your main code here, to run repeatedly:
+myservo.write(90);  
+int a=digitalRead(D5);
+int b=digitalRead(D6);
+int c=digitalRead(D7);
+int d=digitalRead(D0); 
+Serial.println(a);
+Serial.println(b);
+Serial.println(c);
+Serial.println(d);
+if(a==0){
+  myservo.write(180);
+  delay(1000);
+  lcd.setCursor(3,0);
+  lcd.print("OPEN ");}
+else{
+  lcd.setCursor(3,0);
+  lcd.print("CLOSE");}
+if(b==0){
+lcd.setCursor(11,0);
+lcd.print("FULL ");}
+else{
+lcd.setCursor(11,0);
+lcd.print("-----");  }
+if(c==0){
+lcd.setCursor(3,1);
+lcd.print("FULL ");}
+else{
+lcd.setCursor(3,1);
+lcd.print("-----");}
+if(d==0){
+lcd.setCursor(11,1);
+lcd.print("FULL ");}
+else{
+lcd.setCursor(11,1);
+lcd.print("-----");}
+
